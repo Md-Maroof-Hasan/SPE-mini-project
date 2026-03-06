@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+
+    - name: Pull Docker image
+      docker_container:
+        name: spe-calculator
+        image: mdmaroof05/spe-calculator
+        state: started
+        interactive: true
+        tty: true
