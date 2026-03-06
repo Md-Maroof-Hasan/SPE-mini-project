@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/Md-Maroof-Hasan.git'
+                git 'https://github.com/Md-Maroof-Hasan/SPE-mini-project.git'
             }
         }
 
