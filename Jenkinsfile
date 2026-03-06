@@ -1,49 +1,56 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
     environment {
-        DOCKER_IMAGE = "spe-calculator"
-        DOCKERHUB_IMAGE = "mdmaroof05/spe-calculator"
+        DOCKER_IMAGE_NAME = 'spe-calculator'
+        GITHUB_REPO_URL = 'https://github.com/Md-Maroof-Hasan/SPE-mini-project.git'
     }
 
     stages {
 
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
+                script {
+                    // Checkout code from GitHub
+                    git branch: 'main', url: "${GITHUB_REPO_URL}"
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
-            }
-        }
-
-        stage('Tag Image') {
-            steps {
-                sh 'docker tag $DOCKER_IMAGE $DOCKERHUB_IMAGE'
-            }
-        }
-
-        stage('Push Image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh 'docker push $DOCKERHUB_IMAGE'
+                script {
+                    // Build Docker image
+                    docker.build("${DOCKER_IMAGE_NAME}", ".")
                 }
             }
         }
 
-        stage('Deploy') {
+        stage('Push Docker Image') {
             steps {
-                sh 'ansible-playbook -i inventory deploy.yml'
+                script {
+                    docker.withRegistry('', 'docker-hub-cred') {
+
+                        sh 'docker tag spe-calculator mdmaroof05/spe-calculator:latest'
+
+                        sh 'docker push mdmaroof05/spe-calculator'
+                    }
+                }
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: 'deploy.yml',
+                        inventory: 'inventory'
+                    )
+                }
             }
         }
 
