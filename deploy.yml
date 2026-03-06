@@ -1,12 +1,24 @@
 ---
-- hosts: localhost
-  become: true
+- name: Deploy Docker Calculator
+  hosts: localhost
+  become: false
+
   tasks:
 
-    - name: Pull Docker image
-      docker_container:
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+
+    - name: Pull Docker Image from DockerHub
+      community.docker.docker_image:
+        name: mdmaroof05/spe-calculator
+        source: pull
+
+    - name: Run Docker Container
+      community.docker.docker_container:
         name: spe-calculator
         image: mdmaroof05/spe-calculator
         state: started
-        interactive: true
         tty: true
+        detach: true
