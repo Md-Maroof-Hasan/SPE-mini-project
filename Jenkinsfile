@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Md-Maroof-Hasan/SPE-mini-project.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'mvn clean package'
