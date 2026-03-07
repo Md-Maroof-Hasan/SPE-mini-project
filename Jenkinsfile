@@ -55,4 +55,21 @@ pipeline {
         }
 
     }
+    post {
+        success {
+            emailext(
+                subject: "SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: "Build succeeded.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\n${BUILD_URL}",
+                to: "mdmaroofnzhs@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "FAILED: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: "Build failed.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\n${BUILD_URL}",
+                to: "mdmaroofnzhs@gmail.com"
+            )
+        }
+    }
 }
