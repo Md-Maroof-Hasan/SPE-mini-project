@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Checkout code from GitHub
-                    git branch: 'main', url: "${GITHUB_REPO_URL}"
+                    git branch: 'master', url: "${GITHUB_REPO_URL}"
                 }
             }
         }
