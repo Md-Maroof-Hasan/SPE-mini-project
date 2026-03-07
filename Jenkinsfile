@@ -35,7 +35,7 @@ pipeline {
                 script {
                     docker.withRegistry('', 'docker-hub-cred') {
 
-                        sh 'docker tag spe-calculator mmaroof05/spe-calculator:latest'
+                        sh 'docker tag spe-calculator mdmaroof05/spe-calculator:latest'
 
                         sh 'docker push mdmaroof05/spe-calculator'
                     }
@@ -60,7 +60,7 @@ pipeline {
             emailext(
                 subject: "SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
                 body: "Build succeeded.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\n${BUILD_URL}",
-                to: "mdmaroofnzhs@gmail.com"
+                to: "md.maroofnzhs@gmail.com"
             )
         }
 
@@ -68,7 +68,7 @@ pipeline {
             emailext(
                 subject: "FAILED: ${JOB_NAME} #${BUILD_NUMBER}",
                 body: "Build failed.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\n${BUILD_URL}",
-                to: "mdmaroofnzhs@gmail.com"
+                to: "md.maroofnzhs@gmail.com"
             )
         }
     }
