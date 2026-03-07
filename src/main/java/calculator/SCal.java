@@ -34,62 +34,53 @@ public class SCal {
 
         switch (choice) {
 
-            case 1:
-                System.out.print("Enter two numbers: ");
-                a = sc.nextDouble();
-                b = sc.nextDouble();
-                System.out.println("Result = " + (a + b));
-                break;
+            case 1: System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    System.out.println("Result = " + (a + b));
+                    break;
 
-            case 2:
-                System.out.print("Enter two numbers: ");
-                a = sc.nextDouble();
-                b = sc.nextDouble();
-                System.out.println("Result = " + (a - b));
-                break;
+            case 2: System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    System.out.println("Result = " + (a - b));
+                    break;
 
-            case 3:
-                System.out.print("Enter two numbers: ");
-                a = sc.nextDouble();
-                b = sc.nextDouble();
-                System.out.println("Result = " + (a * b));
-                break;
+            case 3: System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    System.out.println("Result = " + (a * b));
+                    break;
 
-            case 4:
-                System.out.print("Enter two numbers: ");
-                a = sc.nextDouble();
-                b = sc.nextDouble();
-                System.out.println("Result = " + (a / b));
-                break;
+            case 4: System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    System.out.println("Result = " + (a / b));
+                    break;
 
-            case 5:
-                System.out.print("Enter number: ");
-                a = sc.nextDouble();
-                System.out.println("Square Root = " + Math.sqrt(a));
-                break;
+            case 5: System.out.print("Enter number: ");
+                    a = sc.nextDouble();
+                    System.out.println("Square Root = " + Math.sqrt(a));
+                    break;
 
-            case 6:
-                System.out.print("Enter number: ");
-                int n = sc.nextInt();
-                System.out.println("Factorial = " + factorial(n));
-                break;
+            case 6: System.out.print("Enter number: ");
+                    int n = sc.nextInt();
+                    System.out.println("Factorial = " + factorial(n));
+                    break;
 
-            case 7:
-                System.out.print("Enter number: ");
-                a = sc.nextDouble();
-                System.out.println("Natural Log = " + Math.log(a));
-                break;
+            case 7: System.out.print("Enter number: ");
+                    a = sc.nextDouble();
+                    System.out.println("Natural Log = " + Math.log(a));
+                    break;
 
-            case 8:
-                System.out.print("Enter base: ");
-                a = sc.nextDouble();
-                System.out.print("Enter power: ");
-                b = sc.nextDouble();
-                System.out.println("Result = " + Math.pow(a, b));
-                break;
+            case 8: System.out.print("Enter base: ");
+                    a = sc.nextDouble();
+                    System.out.print("Enter power: ");
+                    b = sc.nextDouble();
+                    System.out.println("Result = " + Math.pow(a, b));
+                    break;
 
-            default:
-                System.out.println("Invalid choice");
+            default: System.out.println("Invalid choice");
         }
 
         sc.close();
