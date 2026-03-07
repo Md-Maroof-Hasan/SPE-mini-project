@@ -14,17 +14,25 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                script {
-                    // Checkout code from GitHub
-                    git branch: 'main', url: "${GITHUB_REPO_URL}"
-                }
+                git branch: 'main', url: "${GITHUB_REPO_URL}"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image
                     docker.build("${DOCKER_IMAGE_NAME}", ".")
                 }
             }
@@ -34,9 +42,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker-hub-cred') {
-
                         sh 'docker tag spe-calculator mdmaroof05/spe-calculator:latest'
-
                         sh 'docker push mdmaroof05/spe-calculator'
                     }
                 }
@@ -45,29 +51,24 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                script {
-                    ansiblePlaybook(
-                        playbook: 'deploy.yml',
-                        inventory: 'inventory'
-                    )
-                }
+                ansiblePlaybook(
+                    playbook: 'deploy.yml',
+                    inventory: 'inventory'
+                )
             }
         }
-
     }
     post {
-        success {
+        always {
             emailext(
-                subject: "SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
-                body: "Build succeeded.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\n${BUILD_URL}",
-                to: "md.maroofnzhs@gmail.com"
-            )
-        }
+                subject: "Jenkins Pipeline Notification: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+    Build Status: ${currentBuild.currentResult}
 
-        failure {
-            emailext(
-                subject: "FAILED: ${JOB_NAME} #${BUILD_NUMBER}",
-                body: "Build failed.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\n${BUILD_URL}",
+    Job: ${JOB_NAME}
+    Build: ${BUILD_NUMBER}
+    URL: ${BUILD_URL}
+    """,
                 to: "md.maroofnzhs@gmail.com"
             )
         }
