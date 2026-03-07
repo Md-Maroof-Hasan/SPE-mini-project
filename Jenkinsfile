@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Checkout code from GitHub
-                    git branch: 'master', url: "${GITHUB_REPO_URL}"
+                    git branch: 'main', url: "${GITHUB_REPO_URL}"
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     docker.withRegistry('', 'docker-hub-cred') {
 
-                        sh 'docker tag spe-calculator mdmaroof05/spe-calculator:latest'
+                        sh 'docker tag spe-calculator mmaroof05/spe-calculator:latest'
 
                         sh 'docker push mdmaroof05/spe-calculator'
                     }
